@@ -5,15 +5,36 @@ import {
   Container,
   Input,
   Button,
+  MenuItem,
   TextField,
 } from "@material-ui/core";
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 
 export default function Converter() {
   const [exchangeValues, setExchangeValues] = useState([]);
+  const [currency, setCurrency] = useState("EUR");
   const [amount, setAmount] = useState(1);
   const [shownExchangeValue, setShownExchangeValue] = useState(1);
+  const currencies = [
+    {
+      value: "USD",
+      label: "$",
+    },
+    {
+      value: "EUR",
+      label: "€",
+    },
+    {
+      value: "GBP",
+      label: "£",
+    },
+  ];
+  const handleChange = (event) => {
+    let currency = event.target.value;
+    setCurrency(currency);
 
+    console.log(exchangeValues.currency);
+  };
   /* useEffect(() => {
     Axios.all([
       Axios.get(
@@ -67,14 +88,34 @@ export default function Converter() {
             Converter
           </Typography>
           <Container>
-            <form>
-              <TextField
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-              />
-              <ArrowRightAltIcon style={{ fontSize: 40 }} />
-              <TextField value={shownExchangeValue} />
-            </form>
+            <div align="center" style={{ marginTop: "200px" }}>
+              <form noValidate autoComplete="off">
+                <TextField
+                  select
+                  value={currency}
+                  onChange={handleChange}
+                  variant="outlined"
+                >
+                  {currencies.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+                <TextField
+                  variant="outlined"
+                  label={currency}
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                />
+                <ArrowRightAltIcon style={{ fontSize: 55 }} />
+                <TextField
+                  variant="outlined"
+                  label="SEK"
+                  value={shownExchangeValue}
+                />
+              </form>
+            </div>
           </Container>
         </div>
       </main>
