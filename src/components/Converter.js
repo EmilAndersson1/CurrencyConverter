@@ -19,6 +19,7 @@ export default function Converter() {
   const [shownExchangeValue, setShownExchangeValue] = useState(1);
   const [showChart, setShowChart] = useState(false);
   const [chartDataSet, setChartDataSet] = useState({});
+
   const currencies = [
     {
       value: "USD",
@@ -35,23 +36,23 @@ export default function Converter() {
   ];
   const loadChart = () => {
     setChartDataSet({
-      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+      labels: Object.keys(chartData.EUR),
       datasets: [
         {
           label: "USD",
-          data: [43, 34, 76, 55, 66, 54],
+          data: Object.values(chartData.USD),
           backgroundColor: "rgba(255, 23, 68,0.2)",
           borderColor: "rgba(255, 23, 68,1)",
         },
         {
           label: "EUR",
-          data: [12, 54, 33, 54, 46, 65],
+          data: Object.values(chartData.EUR),
           backgroundColor: "rgba(213, 0, 249,0.2)",
           borderColor: "rgba(213, 0, 249,1)",
         },
         {
           label: "GBP",
-          data: [32, 53, 74, 41, 44, 65],
+          data: Object.values(chartData.GBP),
           backgroundColor: "rgba(61, 90, 254,0.2)",
           borderColor: "rgba(61, 90, 254,1)",
         },
@@ -66,10 +67,13 @@ export default function Converter() {
     setCurrency(currency);
     console.log(currency);
     console.log(exchangeValues[currency]);
-    console.log(chartData.EUR);
+    console.log(Object.values(chartData.USD));
     console.log(Object.keys(chartData.EUR));
   };
   useEffect(() => {
+    const date = new Date();
+    const dateEight = new Date();
+    dateEight.setDate(dateEight.getDate() - 8);
     Axios.all([
       Axios.get(
         "https://free.currconv.com/api/v7/convert?q=EUR_SEK&compact=ultra&apiKey=dedc3fcbb37cec30f6ea"
@@ -81,13 +85,25 @@ export default function Converter() {
         "https://free.currconv.com/api/v7/convert?q=GBP_SEK&compact=ultra&apiKey=dedc3fcbb37cec30f6ea"
       ),
       Axios.get(
-        "https://free.currconv.com/api/v7/convert?q=EUR_SEK&compact=ultra&date=2021-05-17&endDate=2021-05-25&apiKey=dedc3fcbb37cec30f6ea"
+        `https://free.currconv.com/api/v7/convert?q=EUR_SEK&compact=ultra&date=${dateEight
+          .toLocaleString()
+          .slice(0, 10)}&endDate=${date
+          .toLocaleString()
+          .slice(0, 10)}&apiKey=dedc3fcbb37cec30f6ea`
       ),
       Axios.get(
-        "https://free.currconv.com/api/v7/convert?q=USD_SEK&compact=ultra&date=2021-05-17&endDate=2021-05-25&apiKey=dedc3fcbb37cec30f6ea"
+        `https://free.currconv.com/api/v7/convert?q=USD_SEK&compact=ultra&date=${dateEight
+          .toLocaleString()
+          .slice(0, 10)}&endDate=${date
+          .toLocaleString()
+          .slice(0, 10)}&apiKey=dedc3fcbb37cec30f6ea`
       ),
       Axios.get(
-        "https://free.currconv.com/api/v7/convert?q=GBP_SEK&compact=ultra&date=2021-05-17&endDate=2021-05-25&apiKey=dedc3fcbb37cec30f6ea"
+        `https://free.currconv.com/api/v7/convert?q=GBP_SEK&compact=ultra&date=${dateEight
+          .toLocaleString()
+          .slice(0, 10)}&endDate=${date
+          .toLocaleString()
+          .slice(0, 10)}&apiKey=dedc3fcbb37cec30f6ea`
       ),
     ])
       .then(
@@ -117,14 +133,6 @@ export default function Converter() {
         console.log(error);
       });
   }, []);
-
-  /*  useEffect(() => {
-    setExchangeValues({
-      EUR: 11,
-      USD: 12,
-      GBP: 13,
-    });
-  }, []); */
 
   useEffect(() => {
     setShownExchangeValue(amount * exchangeValues[currency]);
