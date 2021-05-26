@@ -1,13 +1,6 @@
 import Axios from "axios";
-import React, { useEffect, useState, useRef } from "react";
-import {
-  Typography,
-  Container,
-  Input,
-  Button,
-  MenuItem,
-  TextField,
-} from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { Typography, Container, MenuItem, TextField } from "@material-ui/core";
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 
 export default function Converter() {
@@ -32,10 +25,10 @@ export default function Converter() {
   const handleChange = (event) => {
     let currency = event.target.value;
     setCurrency(currency);
-
-    console.log(exchangeValues.currency);
+    console.log(currency);
+    console.log(exchangeValues[currency]);
   };
-  /* useEffect(() => {
+  useEffect(() => {
     Axios.all([
       Axios.get(
         "https://free.currconv.com/api/v7/convert?q=EUR_SEK&compact=ultra&apiKey=dedc3fcbb37cec30f6ea"
@@ -54,31 +47,31 @@ export default function Converter() {
             USD: responseUSD.data.USD_SEK,
             GBP: responseGBP.data.GBP_SEK,
           });
-          console.log(exchangeValues);
         })
       )
       .catch((error) => {
         console.log(error);
       });
-  }, []); */
+  }, []);
 
-  useEffect(() => {
+  /*  useEffect(() => {
     setExchangeValues({
       EUR: 11,
       USD: 12,
       GBP: 13,
     });
-  }, []);
+  }, []); */
 
   useEffect(() => {
-    setShownExchangeValue(amount * exchangeValues.EUR);
+    setShownExchangeValue(amount * exchangeValues[currency]);
   }, [amount]);
 
   useEffect(() => {
     if (exchangeValues !== []) {
-      setShownExchangeValue(exchangeValues.EUR);
+      setShownExchangeValue(exchangeValues[currency]);
+      setAmount(1);
     }
-  }, [exchangeValues]);
+  }, [exchangeValues, currency]);
 
   return (
     <>
