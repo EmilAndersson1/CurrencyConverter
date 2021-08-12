@@ -12,16 +12,18 @@ This project is licensed under the terms of the MIT license.
 
 ## Dependecies
 
-Install the following dependecies to run the app:
+This app has the following dependencies:
 
 ```
-npm install react
-npm install material-ui/core
-npm install material-ui/icons
-npm install node
-npm install axios
-npm install --save react-chartjs-2 chart.js
+react
+material-ui/core
+material-ui/icons
+node
+axios
+--save react-chartjs-2 chart.js
 ```
+
+To install them, run the command `npm install`.
 
 ##
 
@@ -30,6 +32,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ### `npm start`
 
 Runs the app in the development mode.\
+Make sure to run the command `npm install` before you run the app.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
