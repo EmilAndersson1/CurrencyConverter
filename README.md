@@ -20,7 +20,8 @@ material-ui/core
 material-ui/icons
 node
 axios
---save react-chartjs-2 chart.js
+react-chartjs-2
+chart.js
 ```
 
 To install them, run the command `npm install`.
